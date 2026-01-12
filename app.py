@@ -45,11 +45,9 @@ class InputPreprocessor:
 
 
 class Evaluator:
-    def evaluate(self, model, X_test, y_test, scaler):
-        X_test_scaled = scaler.transform(X_test)
-
-        y_pred = model.predict(X_test_scaled)
-        y_pred_proba = model.predict_proba(X_test_scaled)[:, 1]
+    def evaluate(self, model, X_test, y_test):
+        y_pred = model.predict(X_test)
+        y_pred_proba = model.predict_proba(X_test)[:, 1]
 
         accuracy = accuracy_score(y_test, y_pred)
         report = classification_report(y_test, y_pred, output_dict=True)
@@ -251,7 +249,7 @@ if page == "Evaluasi & Kesimpulan":
     else:
         st.subheader("📊 Evaluasi Model (Data Uji)")
 
-        hasil_eval = evaluator.evaluate(model, X_test, y_test, scaler)
+        hasil_eval = evaluator.evaluate(model, X_test, y_test)
         y_pred = hasil_eval["y_pred"]
         y_pred_proba = hasil_eval["y_pred_proba"]
         report = hasil_eval["report"]
@@ -389,4 +387,5 @@ if page == "Evaluasi & Kesimpulan":
         
         Nilai AUC-ROC yang tinggi ({auc:.4f}) menunjukkan kemampuan model membedakan kedua kelas dengan sangat baik.
         """)
+
 
