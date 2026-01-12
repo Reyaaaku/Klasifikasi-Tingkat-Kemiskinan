@@ -22,6 +22,7 @@ class ModelLoader:
     @st.cache_resource
     def load_artifacts():
         model = joblib.load("xgboost_model.pkl")
+        model.set_params(predictor="cpu_predictor")
         scaler = joblib.load("scaler.pkl")
         try:
             X_test = joblib.load("X_test.pkl")
@@ -388,3 +389,4 @@ if page == "Evaluasi & Kesimpulan":
         
         Nilai AUC-ROC yang tinggi ({auc:.4f}) menunjukkan kemampuan model membedakan kedua kelas dengan sangat baik.
         """)
+
